@@ -8,7 +8,8 @@ const fraudDb = 'https://raw.githubusercontent.com/LloydAsp/nfd/main/data/fraud.
 const notificationUrl = 'https://raw.githubusercontent.com/LloydAsp/nfd/main/data/notification.txt'
 const startMsgUrl = 'https://raw.githubusercontent.com/LloydAsp/nfd/main/data/startMessage.md';
 
-const enable_notification = true
+const enable_notification = false
+
 /**
  * Return url to telegram api, optionally with parameters added
  */
@@ -97,18 +98,24 @@ async function onUpdate (update) {
  */
 async function onMessage (message) {
   if(message.text === '/start'){
+    /*
+    为了不显示开头的面板
     let startMsg = await fetch(startMsgUrl).then(r => r.text())
     return sendMessage({
       chat_id:message.chat.id,
       text:startMsg,
     })
+    */
   }
   if(message.chat.id.toString() === ADMIN_UID){
     if(!message?.reply_to_message?.chat){
+      /*
+      为了不显示自己输入/start开头的面板
       return sendMessage({
         chat_id:ADMIN_UID,
         text:'使用方法，回复转发的消息，并发送回复消息，或者`/block`、`/unblock`、`/checkblock`等指令'
       })
+      */
     }
     if(/^\/block$/.exec(message.text)){
       return handleBlock(message)
